@@ -39,4 +39,9 @@ COMMANDS = {
         "auth": True,
         "description": "Stop a service",
     },
+    "update": {
+        "func": botUpdateServices,
+        "auth": True,
+        "description": "Update the service",
+    },
 }

@@ -112,3 +112,50 @@ async def botRestartServices(client, message: discord.Message, **kargvs):
 
         else:
             await message.channel.send(f"Unable to find service name :: `{msg}`")
+
+
+async def botUpdateServices(client, message: discord.Message, **kargvs):
+
+    client = docker.from_env()
+
+    if len(kargvs.get("messages")) == 0:
+        await message.channel.send(
+            f"No service names were request, use the `list` command."
+        )
+        return
+
+    for msg in kargvs.get("messages"):
+        container = findContainer(client, msg)
+
+        if container:
+            await message.channel.send(
+                f"Updating `{msg}` service... This might take a few minutes."
+            )
+
+            # Pull
+            image = container.image
+            tag = image.tags[0]
+            print(f"Image tag :: {tag}")
+
+            try:
+                new_image = client.images.pull(tag)
+
+                print(f"Updating image: {new_image} ({new_image.short_id})")
+
+            except Exception as err:
+                print(f"Unable to pull image: {tag}")
+                return
+
+            if container.status == "running" or container.status == "paused":
+                print("Container is being stopped...")
+                container.stop(timeout=10)
+
+            else:
+                print("Container is already offline...")
+
+            container.start()
+
+            await message.channel.send(f"Service `{msg}` has been restarted.")
+
+        else:
+            await message.channel.send(f"Unable to find service name :: `{msg}`")
