@@ -5,7 +5,7 @@ services:
     build: .
     container_name: wicket
     env_file: .env
-    environment:
+    # environment:
       # DISCORD_ADMINS: MyUser#1234,MyOtherUser#4321
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
