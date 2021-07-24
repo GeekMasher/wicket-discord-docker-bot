@@ -15,7 +15,7 @@ RUN python3 -m pip install pipenv && \
 RUN apt-get remove -y \
     dpkg-dev gcc make wget \
     libbluetooth-dev libbz2-dev libc6-dev libexpat1-dev libffi-dev libgdbm-dev \
-    liblzma-dev libncursesw5-dev \libreadline-dev libsqlite3-dev libssl-dev \
+    liblzma-dev libncursesw5-dev libreadline-dev libsqlite3-dev libssl-dev \
     tk-dev uuid-dev xz-utils zlib1g-dev
 
 RUN apt-get clean autoclean && \
