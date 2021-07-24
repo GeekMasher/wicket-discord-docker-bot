@@ -18,6 +18,7 @@ jobs:
 
     - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
       uses: anchore/scan-action@main
+      continue-on-error: true
       with:
         image: "localbuild/testimage:latest"
         acs-report-enable: true
