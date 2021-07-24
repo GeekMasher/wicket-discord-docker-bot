@@ -9,7 +9,7 @@ This bot was created to make it easier for a Discord user to list, start, and st
 
 There are three core parts to setting up the bot; configuration file, Discord token, and Docker socket.
 
-### Quick start
+### Quick start
 
 Create a `.env` file and add the following keys and their values:
 
@@ -65,7 +65,7 @@ To connect to the Doker daemon you'll need access to the Docker socket on the lo
 This is done by connecting to the local system Docker enviroment using a number of methods including the `DOCKER_HOST` environment variable.
 
 ```env
-# Local Unix Socket
+# Local Unix Socket
 DOCKER_HOST=/var/run/docker.sock
 
 # Remote Socket
