@@ -10,7 +10,15 @@ from wicket.commands import COMMANDS, botHelp
 
 parser = argparse.ArgumentParser(__name__)
 
-parser.add_argument("--token", default=os.environ.get("DISCORD_TOKEN"))
+parser.add_argument(
+    "-t", "--token", default=os.environ.get("DISCORD_TOKEN"), help="Discord Token"
+)
+parser.add_argument(
+    "-a",
+    "--admins",
+    default=os.environ.get("DISCORD_ADMINS"),
+    help="Discord List of Admins. Seperated by comma (,)",
+)
 parser.add_argument("--config", default="./data/config.yml")
 
 
@@ -23,6 +31,12 @@ class WicketClient(discord.Client):
     __PREFIX__ = "/wicket"
 
     def isAuthorized(self, message: discord.Message):
+        #  Global admins
+        admins = WicketClient.__CONFIG__.get("admins", [])
+        if message.author in admins:
+            return True
+
+        # Per Server/Guide Configuration
         server_config = None
         for _, data in WicketClient.__CONFIG__.get("servers", {}).items():
             if data.get("name", "") == str(message.guild):
@@ -85,9 +99,23 @@ class WicketClient(discord.Client):
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    with open(args.config, "r") as handle:
-        config = yaml.safe_load(handle)
-        WicketClient.__CONFIG__ = config
+    config = {}
+    if os.path.exists(args.config):
+        with open(args.config, "r") as handle:
+            config = yaml.safe_load(handle)
+
+    admins = []
+    if args.admins:
+        admins.extend(args.admins.split(","))
+
+    if not config.get("admins"):
+        config["admins"] = []
+    config["admins"].extend(admins)
+
+    print(f"Admins :: {config['admins']}")
+
+    #  Set the Wicket client's config
+    WicketClient.__CONFIG__ = config
 
     client = docker.from_env()
 
