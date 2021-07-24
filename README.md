@@ -5,10 +5,6 @@ Wicket - The Discord Docker Bot to link your Docker deployments to Discord
 This bot was created to make it easier for a Discord user to list, start, and stop Docker containers primarily for gaming servers.
 
 
-## Setup
-
-There are three core parts to setting up the bot; configuration file, Discord token, and Docker socket.
-
 ### Quick start
 
 Create a `.env` file and add the following keys and their values:
@@ -23,6 +19,17 @@ DISCORD_ADMINS=MyUser#1234,MyOtherUser#4321
 DOCKER_HOST=/var/run/docker.sock
 ```
 
+Start up the Docker container using the `.env` file.
+
+```bash
+docker run -d --env-file=.env --name wicket \
+  ghcr.io/geekmasher/wicket-discord-docker-bot:main
+```
+
+
+## Setup
+
+There are three core parts to setting up the bot; configuration file, Discord token, and Docker socket.
 
 ### Configuration file
 
