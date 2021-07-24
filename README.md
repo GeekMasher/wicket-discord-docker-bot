@@ -9,8 +9,24 @@ This bot was created to make it easier for a Discord user to list, start, and st
 
 There are three core parts to setting up the bot; configuration file, Discord token, and Docker socket.
 
+### Quick start
+
+Create a `.env` file and add the following keys and their values:
+
+```env
+# Discord Bot/App token
+DISCORD_TOKEN=ABCDEFG
+
+DISCORD_ADMINS=MyUser#1234,MyOtherUser#4321
+
+# [optional] Docker socket
+DOCKER_HOST=/var/run/docker.sock
+```
+
 
 ### Configuration file
+
+This isn't needed and is optional but gives administrators better control over how the bot is used.
 
 ```yml
 domain: domain.example.com
@@ -56,4 +72,3 @@ DOCKER_HOST=/var/run/docker.sock
 DOCKER_HOST=ssh://user@1.1.1.1
 
 ```
-
