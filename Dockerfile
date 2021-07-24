@@ -11,7 +11,7 @@ COPY . /app
 RUN python3 -m pip install pipenv && \
     python3 -m pipenv install --system
 
-# Remove all un-needed libraries and tools
+# Remove all unnecessary libraries and tools
 RUN apt-get remove -y \
     dpkg-dev gcc make wget \
     libbluetooth-dev libbz2-dev libc6-dev libexpat1-dev libffi-dev libgdbm-dev \
