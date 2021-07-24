@@ -1,11 +1,16 @@
+# Domain when the Service can be accessed (domain or IP)
 domain: domain.example.com
 
-# Discord servers
+# List of Admins from any Discord servers / channel
+admins:
+  # - MyUser#1234
+
+# Discord servers for better fine grain control
 servers:
-  example:
-    name: Example Server Name
-    admins:
-      - MyUser#1234
+  # example:
+  #   name: Example Server Name
+  #   admins:
+  #     - MyUser#1234
 
 docker-labels:
-  - com.example.services.type=gaming
+  - wicket.services.type=gaming
