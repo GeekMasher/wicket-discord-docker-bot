@@ -4,6 +4,8 @@ Wicket - The Discord Docker Bot to link your Docker deployments to Discord
 
 This bot was created to make it easier for a Discord user to list, start, and stop Docker containers primarily for gaming servers.
 
+The name [Wicket (Wicket Wystri Warrick) comes from the Star Wars Ewok character](https://starwars.fandom.com/wiki/Wicket_Wystri_Warrick).
+
 
 ### Quick start
 
