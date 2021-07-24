@@ -79,3 +79,14 @@ DOCKER_HOST=/var/run/docker.sock
 DOCKER_HOST=ssh://user@1.1.1.1
 
 ```
+
+## Security
+
+### Docket Socket
+
+The Docker socket is extremely important to protect as if an attacker has access to the socket they would have unrestricted access to the Docker host.
+
+Read the following documentation on the subject:
+
+- [Docker security](https://docs.docker.com/engine/security/)
+- [Protect the Docker daemon socket](https://docs.docker.com/engine/security/protect-access/)
