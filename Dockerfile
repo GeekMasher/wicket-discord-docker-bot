@@ -1,5 +1,12 @@
 FROM python:3.9
 
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get dist-upgrade && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 WORKDIR /app
 
 COPY . /app
