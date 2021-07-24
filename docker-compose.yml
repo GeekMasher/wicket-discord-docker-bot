@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  wicket:
+    build: .
+    container_name: wicket
+    env_file: .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+

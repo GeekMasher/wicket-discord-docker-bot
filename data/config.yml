@@ -1,0 +1,11 @@
+domain: domain.example.com
+
+# Discord servers
+servers:
+  example:
+    name: Example Server Name
+    admins:
+      - MyUser#1234
+
+docker-labels:
+  - com.example.services.type=gaming
