@@ -12,9 +12,9 @@ async def botListServices(client, message: discord.Message, **kargvs):
 
     client = docker.from_env()
 
-    labels = client.__CONFIG__.get("docker-labels", [])
+    labels = kargvs.get("config", {}).get("docker-labels", [])
 
-    containers = client.containers.list(all=True, filters={"label": labels.index(0)})
+    containers = client.containers.list(all=True, filters={"label": labels})
 
     if len(containers) == 0:
         await message.channel.send("❌ No Services online at this moment")

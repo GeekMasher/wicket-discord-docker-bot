@@ -3,8 +3,10 @@ import docker
 import discord
 
 
-def findContainer(client, name):
-    labels = client.__CONFIG__.get("docker-labels", [])
+def findContainer(client, config, name):
+    labels = config.get("docker-labels", [])
+
+    containers = client.containers.list(all=True, filters={"label": labels})
 
     containers = client.containers.list(
         all=True,
@@ -25,7 +27,7 @@ async def botStartServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, msg)
+        container = findContainer(client, kargvs.get("config", {}), msg)
         if container:
             print(container.status)
 
@@ -62,7 +64,7 @@ async def botStopServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, msg)
+        container = findContainer(client, kargvs.get("config", {}), msg)
         if container:
             if container.status == "paused" or container.status == "stopped":
                 await message.channel.send(
@@ -92,7 +94,7 @@ async def botRestartServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, msg)
+        container = findContainer(client, kargvs.get("config", {}), msg)
 
         if container:
             await message.channel.send(
@@ -125,7 +127,7 @@ async def botUpdateServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, msg)
+        container = findContainer(client, kargvs.get("config", {}), msg)
 
         if container:
             await message.channel.send(
