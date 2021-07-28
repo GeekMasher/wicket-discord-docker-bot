@@ -39,11 +39,27 @@ async def botListServices(client, message: discord.Message, **kargvs):
         else:
             server = "⚠️ " + server
 
-        port = container.labels.get("wicket.services.port", 0)
+        port = container.labels.get("wicket.services.port", None)
+
+        if not port:
+            container_ports = container.attrs.get("NetworkSettings", {}).get(
+                "Ports", {}
+            )
+            for _, port_data in container_ports.items():
+                # Pick first port that is forwarded
+                port = int(port_data[0].get("HostPort"))
+                break
+
+        if port:
+            server_string = (
+                f"[steam://connect/{domain}:{port}](stream://connect/{domain}:{port})"
+            )
+        else:
+            server_string = f"[steam://connect/{domain}](stream://connect/{domain})"
 
         embed.add_field(
             name=server,
-            value=f"[steam://connect/{domain}:{port}](stream://connect/{domain}:{port})",
+            value=server_string,
             inline=False,
         )
 
