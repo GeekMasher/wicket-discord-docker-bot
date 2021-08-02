@@ -101,6 +101,8 @@ if __name__ == "__main__":
 
     config = {}
     if os.path.exists(args.config):
+        print(f"Loading config from :: {args.config}")
+
         with open(args.config, "r") as handle:
             config = yaml.safe_load(handle)
 
@@ -113,6 +115,11 @@ if __name__ == "__main__":
     config["admins"].extend(admins)
 
     print(f"Admins :: {config['admins']}")
+
+    for server, server_data in config.get("servers", {}).items():
+        print(
+            f"[+] Server({server}, admins=\"{server_data.get('admins')}\", labels=\"{server_data.get('labels', [])}\")"
+        )
 
     #  Set the Wicket client's config
     WicketClient.__CONFIG__ = config
