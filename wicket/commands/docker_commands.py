@@ -2,18 +2,7 @@ from typing import Container
 import docker
 import discord
 
-
-def findContainer(client, config, name):
-    labels = config.get("docker-labels", [])
-
-    containers = client.containers.list(all=True, filters={"label": labels})
-
-    containers = client.containers.list(
-        all=True,
-        filters={"name": name, "label": labels.index(0)},
-    )
-
-    return None if len(containers) == 0 else containers[0]
+from wicket.docker_utils import findContainers
 
 
 async def botStartServices(client, message: discord.Message, **kargvs):
@@ -27,7 +16,12 @@ async def botStartServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, kargvs.get("config", {}), msg)
+        containers = findContainers(
+            client, kargvs.get("config", {}), name=msg, guild=message.guild
+        )
+
+        container = containers[0]
+
         if container:
             print(container.status)
 
@@ -64,7 +58,12 @@ async def botStopServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, kargvs.get("config", {}), msg)
+        containers = findContainers(
+            client, kargvs.get("config", {}), name=msg, guild=message.guild
+        )
+
+        container = containers[0]
+
         if container:
             if container.status == "paused" or container.status == "stopped":
                 await message.channel.send(
@@ -94,7 +93,11 @@ async def botRestartServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, kargvs.get("config", {}), msg)
+        containers = findContainers(
+            client, kargvs.get("config", {}), name=msg, guild=message.guild
+        )
+
+        container = containers[0]
 
         if container:
             await message.channel.send(
@@ -127,7 +130,11 @@ async def botUpdateServices(client, message: discord.Message, **kargvs):
         return
 
     for msg in kargvs.get("messages"):
-        container = findContainer(client, kargvs.get("config", {}), msg)
+        containers = findContainers(
+            client, kargvs.get("config", {}), name=msg, guild=message.guild
+        )
+
+        container = containers[0]
 
         if container:
             await message.channel.send(

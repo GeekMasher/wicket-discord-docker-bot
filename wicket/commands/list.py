@@ -1,6 +1,7 @@
 import docker
 import discord
 
+from wicket.docker_utils import findContainers
 
 LIST_CONTAINERS = """\
 Currently Services:
@@ -12,9 +13,7 @@ async def botListServices(client, message: discord.Message, **kargvs):
 
     client = docker.from_env()
 
-    labels = kargvs.get("config", {}).get("docker-labels", [])
-
-    containers = client.containers.list(all=True, filters={"label": labels})
+    containers = findContainers(client, kargvs.get("config"), guild=message.guild)
 
     if len(containers) == 0:
         await message.channel.send("❌ No Services online at this moment")
@@ -45,10 +44,13 @@ async def botListServices(client, message: discord.Message, **kargvs):
             container_ports = container.attrs.get("NetworkSettings", {}).get(
                 "Ports", {}
             )
-            for _, port_data in container_ports.items():
-                # Pick first port that is forwarded
-                port = int(port_data[0].get("HostPort"))
-                break
+            try:
+                for _, port_data in container_ports.items():
+                    # Pick first port that is forwarded
+                    port = int(port_data[0].get("HostPort"))
+                    break
+            except Exception as err:
+                print(f"[!] Exception :: {err}")
 
         if port:
             server_string = (
