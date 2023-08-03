@@ -11,6 +11,17 @@ six = "*"
 paramiko = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
+
+[scripts]
+main = "python -m wicket"
+build = "python -m build"
+publish = "python -m twine upload dist/*"
+# tests
+test = "python -m unittest discover -v -s ./tests -p 'test_*.py'"
+# formatting
+fmt = "black ./wicket"
+lint = "black --check ./wicket"

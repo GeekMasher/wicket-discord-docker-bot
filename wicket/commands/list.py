@@ -10,7 +10,6 @@ Currently Services:
 
 
 async def botListServices(client, message: discord.Message, **kargvs):
-
     client = docker.from_env()
 
     containers = findContainers(client, kargvs.get("config"), guild=message.guild)

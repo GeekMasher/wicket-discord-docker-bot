@@ -26,7 +26,6 @@ from wicket.commands import COMMANDS
 
 
 class WicketClient(discord.Client):
-
     __CONFIG__ = {}
     __PREFIX__ = "/wicket"
 

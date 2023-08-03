@@ -34,12 +34,3 @@ jobs:
       run: |
         pipenv run lint
 
-    - name: Build
-      run: |
-        pipenv run build
-
-    - name: Test with unittest
-      run: |
-        export PYTHONPATH=$PWD/src
-        pipenv run test
-

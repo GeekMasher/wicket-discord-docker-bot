@@ -6,7 +6,6 @@ from wicket.docker_utils import findContainers
 
 
 async def botStartServices(client, message: discord.Message, **kargvs):
-
     client = docker.from_env()
 
     if len(kargvs.get("messages")) == 0:
@@ -48,7 +47,6 @@ async def botStartServices(client, message: discord.Message, **kargvs):
 
 
 async def botStopServices(client, message: discord.Message, **kargvs):
-
     client = docker.from_env()
 
     if len(kargvs.get("messages")) == 0:
@@ -83,7 +81,6 @@ async def botStopServices(client, message: discord.Message, **kargvs):
 
 
 async def botRestartServices(client, message: discord.Message, **kargvs):
-
     client = docker.from_env()
 
     if len(kargvs.get("messages")) == 0:
@@ -120,7 +117,6 @@ async def botRestartServices(client, message: discord.Message, **kargvs):
 
 
 async def botUpdateServices(client, message: discord.Message, **kargvs):
-
     client = docker.from_env()
 
     if len(kargvs.get("messages")) == 0:
