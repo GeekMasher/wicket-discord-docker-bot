@@ -1,0 +1,4 @@
+.github/
+.vscode/
+data/
+docker-compose.yml
