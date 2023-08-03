@@ -5,7 +5,6 @@ from wicket.commands.docker_commands import *
 
 
 async def botHelp(cxt, message: discord.Message, **kargvs):
-
     TEXT = "Help Options:\n"
 
     for name, command in COMMANDS.items():
